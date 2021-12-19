@@ -1,13 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{ mix('css/app.css')}}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+
 <body>
-    <h1 class="text-4xl text-indigo-500 font-bold py-10 text-center">Test</h1>
+  <!-- top navigation -->
+  <x-main_nav />
+
+  <div class="flex">
+
+    <!-- left navigation -->
+    <div>
+      <x-left_nav />
+    </div>
+
+    <!-- content here  -->
+    <div class="w-full">
+      <x-user_managment />
+    </div>
+
+
+
+  </div>
+
+
+
+
+
+
+
+
 </body>
+
 </html>
