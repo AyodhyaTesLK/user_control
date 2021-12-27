@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +16,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/users', [UsersController::class, 'index']);
+
+
+
+
+
+
+//user routes--------------------------------------------------------------
+
+Route::get('/', [UsersController::class, 'index']);
+
+Route::get('/adduser', function () {
+    return view('users.create');
+})->name('adduser');
+
+Route::post('/adduser', [UsersController::class, 'store']);
+
+
+
+
+
+//page routes
+Route::get('/about', [PagesController::class, 'index']);
