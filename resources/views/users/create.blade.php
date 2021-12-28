@@ -301,7 +301,7 @@
 
 
 
-                <div class="mt-4">
+                {{-- <div class="mt-4">
                     <label for="username-error"
                         class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Your name</label>
                     <input type="text" id="username-error"
@@ -309,11 +309,28 @@
                         placeholder="Bonnie Green">
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span>
                         Username already taken!</p>
+                </div> --}}
+
+
+
+                <div class="container">
+                    <br />
+                    <h3 align="center">Image Crop & Upload using JQuery with PHP Ajax</h3>
+                    <br />
+                    <br />
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Select Profile Image</div>
+                        <div class="panel-body" align="center">
+                            <input type="file" name="upload_image" id="upload_image" :multiple="multiple"
+                                :accept="accept" />
+                            <br />
+                            <div id="uploaded_image"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div>
                     <button type="submit" class="submit px-8 py-2 bg-green-500 rounded-sm">Submit</button>
-                    {{-- <input type="submit" class="submit px-8 py-2 bg-green-500 rounded-sm"> --}}
                 </div>
                 </form>
             </div>
@@ -370,4 +387,6 @@
 
         </div>
     </div>
+
+
 </x-layout>

@@ -99,14 +99,17 @@
                         <tr class="border-b">
                             <!-- name -->
                             <td class="px-6 py-4 text-sm font-medium text-gray-800 flex items-center ">
-                                @if ($user->img_url != null)
-                                    <img src="{{ $user->img_url }}" alt="avatar"
+                                {{-- @if ($user->img_url != null)
+                                    <img src="storage/images/default.png" alt="avatar"
                                         class=" mx-3 w-10 h-10 rounded-full ">
                                 @endif
 
                                 @if ($user->img_url == null)
-                                    <img src="images/default.png" alt="avatar" class=" mx-3 w-10 h-10 rounded-full ">
-                                @endif
+                                    <img src="storage/images/default.png" alt="avatar"
+                                        class=" mx-3 w-10 h-10 rounded-full ">
+                                @endif --}}
+                                <img src="storage/images/{{ $user->img_url }}" alt="avatar"
+                                    class=" mx-3 w-10 h-10 rounded-full object-cover">
 
                                 {{ $user->name }}
                             </td>

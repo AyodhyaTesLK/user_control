@@ -45,14 +45,13 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //data validation--------------------------------------------------
+        //data validation-----------------------------------------------------------------------
         // $data = $this->validate($request, [
         //     'fname' => 'required|max:255',
         //     'lname' => 'nullable',
         // ]);
-        // dd($data);
 
-        //get data from form---------------------------------------------
+        //get data from form--------------------------------------------------------------------
         $user = new User;
         $name = $request->fname . ' ' . $request->lname;
         $img_url = 'default.png';
@@ -64,20 +63,20 @@ class UsersController extends Controller
         $user->has_360 = $request->has('has_360');
         $user->last_login = '1980-09-19';
         $user->status = 1;
+
+        //check if user add image if it is not image url set as default.png
         if ($request->hasfile('img_url')) {
 
-
-            //save in public folder----------------------------------------------------
+            //save in public folder-----------------------------------------------------------------
             // $photo_path = $request->file('img_url');
             // $m_path = $photo_path->getClientOriginalName();
             // $photo_path->move(public_path('images/'), $m_path);   //it will be save your image on public/images folder
             // $user->update(['image' => "/images/{$m_path}"]);
             // $img_url = 'images/' . $m_path;
 
-
-            //save in storage folder---------------------------------------------------
+            //save in storage folder----------------------------------------------------------------
             $img_url = time() . '.' . $request->img_url->extension();
-            $request->img_url->storeAs('images', $img_url);
+            $request->img_url->storeAs('public/images', $img_url);
         }
 
         $user->img_url = $img_url;
