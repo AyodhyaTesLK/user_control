@@ -34,7 +34,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -53,9 +53,9 @@ class UsersController extends Controller
 
         //get data from form--------------------------------------------------------------------
         $user = new User;
-        $name = $request->fname . ' ' . $request->lname;
-        $img_url = 'default.png';
-        $user->name = $name;
+        $user->fname = $request->fname;
+        $user->lname = $request->lname;
+        $img_url = '';
         $user->email = $request->email;
         $user->username = $request->username;
         $user->password = bcrypt($request->password);
@@ -76,12 +76,14 @@ class UsersController extends Controller
 
             //save in storage folder----------------------------------------------------------------
             $img_url = time() . '.' . $request->img_url->extension();
-            $request->img_url->storeAs('public/images', $img_url);
+            $request->img_url->storeAs('public/avatars', $img_url);
         }
 
         $user->img_url = $img_url;
+        // dd($user);
         $user->save();
-        return redirect('/adduser');
+        // return redirect('/adduser');
+        return redirect('users')->with('flash_message', 'User Addedd!');
     }
 
     /**
@@ -92,7 +94,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return view('users.show',compact('user'));
     }
 
     /**
@@ -103,7 +106,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('users.edit')->with('user', $user);
     }
 
     /**
@@ -115,7 +119,17 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $input = $request->all();
+        // $user->has_crm = $request->has('has_crm');
+        // $user->has_360 = $request->has('has_360');
+        
+        // if($input['has_360'] == "on"){
+
+        // }
+        
+        $user->update($input);
+        return redirect('users')->with('flash_message', 'User Updated!');
     }
 
     /**
@@ -126,6 +140,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        return redirect('users')->with('flash_message', 'User deleted!');
     }
 }

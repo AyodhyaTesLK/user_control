@@ -28,18 +28,25 @@
                 {{-- image upload --}}
                 <div class="py-3 ">
                     <div class="bg-white px-4 py-5 rounded-lg shadow-lg text-center w-48 mx-auto">
-                        <div class="mb-4">
-                            <img class="w-auto mx-auto rounded-full object-cover object-center"
-                                src="https://i1.pngguru.com/preview/137/834/449/cartoon-cartoon-character-avatar-drawing-film-ecommerce-facial-expression-png-clipart.jpg"
-                                alt="Avatar Upload" />
+                        <div class="mb-4 content-center">
+                                @if ($user->img_url == null)
+                                <img src="../../storage/avatars/default.png" alt="avatar"
+                                    class=" mx-3 w25 h-25 rounded-full">
+                            @endif
+
+                            @if ($user->img_url != null)
+                                <img src="../../storage/avatars/{{ $user->img_url }}" alt="avatar"
+                                    class=" mx-3 w-25 h-25 rounded-full">
+                            @endif
                         </div>
                         <label class="cursor-pointer mt-6">
                             <span
                                 class="mt-2 text-base leading-normal px-4 py-2 bg-blue-500 text-white  rounded-full">Select
                                 Avatar</span>
-                            <form action="{{ url('users') }}" method="POST" enctype="multipart/form-data"
+                            <form action="{{ url('users/' .$user->id) }}" method="POST" enctype="multipart/form-data"
                                 name="userData">
-                                @csrf
+                                {!! csrf_field() !!}
+                                @method("PATCH")
                                 <input type='file' class="hidden" :multiple="multiple" :accept="accept"
                                     name="img_url" />
                         </label>
@@ -116,7 +123,7 @@
                     </div>
                     <input type="text" id="username-adress-icon" name="username"
                         class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                        placeholder="name@gmail.com">
+                        placeholder="name@gmail.com" value="{{$user->username}}">
                 </div>
 
                 <div class="flex  ">
@@ -134,7 +141,7 @@
                             </div>
                             <input type="text" id="first-name-adress-icon" name="fname"
                                 class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                                placeholder="name@gmail.com">
+                                placeholder="First Name" value="{{$user->fname}}">
                             @error('fname')
                                 <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                             @enderror
@@ -155,7 +162,7 @@
                             </div>
                             <input type="text" id="last-name-adress-icon" name="lname"
                                 class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                                placeholder="name@gmail.com">
+                                placeholder="name@gmail.com" value="{{$user->lname}}">
                         </div>
                     </div>
                 </div>
@@ -172,7 +179,7 @@
                     </div>
                     <input type="text" id="email-adress-icon" name="email"
                         class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                        placeholder="name@gmail.com">
+                        placeholder="name@gmail.com" value="{{ $user->email }}">
                 </div>
 
 
@@ -231,14 +238,14 @@
 
                     <div class="w-full bg-yellow-400 rounded-sm m-1">
 
-                        <label for="toggleA" class="flex justify-between cursor-pointer  m-4 ">
+                        <label for="toggleA" class="flex justify-between cursor-pointer  m-4 "> 
                             <div class="font-medium text-white">
                                 360
                             </div>
                             <!-- toggle -->
                             <div class="relative">
                                 <!-- input -->
-                                <input type="checkbox" id="toggleA" class="sr-only" name="has_360">
+                                <input type="checkbox" id="toggleA" class="sr-only" name="has_360" @if ($user->has_360) checked @endif>
                                 <!-- line -->
                                 <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
                                 <!-- dot -->
@@ -260,7 +267,7 @@
                             <!-- toggle -->
                             <div class="relative">
                                 <!-- input -->
-                                <input type="checkbox" id="toggleB" class="sr-only" name="has_crm">
+                                <input type="checkbox" id="toggleB" class="sr-only" name="has_crm" @if ($user->has_crm) checked @endif>
                                 <!-- line -->
                                 <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
                                 <!-- dot -->
@@ -313,24 +320,10 @@
 
 
 
-                <div class="container">
-                    <br />
-                    <h3 align="center">Image Crop & Upload using JQuery with PHP Ajax</h3>
-                    <br />
-                    <br />
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Select Profile Image</div>
-                        <div class="panel-body" align="center">
-                            <input type="file" name="upload_image" id="upload_image" :multiple="multiple"
-                                :accept="accept" />
-                            <br />
-                            <div id="uploaded_image"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <button type="submit" class="submit px-8 py-2 bg-green-500 rounded-sm">Submit</button>
+               
+                <br><br>
+                <div> 
+                    <button type="submit" class="submit px-8 py-2 bg-green-500 rounded-sm mt-12">Save Changes</button>
                 </div>
                 </form>
             </div>

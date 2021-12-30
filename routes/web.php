@@ -28,13 +28,17 @@ use Illuminate\Support\Facades\Route;
 
 //user routes--------------------------------------------------------------
 
-Route::get('/', [UsersController::class, 'index']);
+// Route::get('/users', [UsersController::class, 'index'])->name('users');
 
-Route::get('/adduser', function () {
-    return view('users.create');
-})->name('adduser');
+// Route::get('/create', [UsersController::class, 'create'])->name('create');
+// // Route::get('/adduser', function () {
+// //     return view('users.create');
+// // })->name('adduser');
 
-Route::post('/adduser', [UsersController::class, 'store']);
+// Route::post('/adduser', [UsersController::class, 'store']);
+
+
+Route::resource('/users', UsersController::class);
 
 
 
