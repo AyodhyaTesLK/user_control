@@ -1,6 +1,7 @@
 <x-layout>
+    
     <div class="w-full">
-
+        {{ dd(Auth::user()) }}
         <!-- add user heading start-->
         <div class="flex justify-between px-8 py-3  shadow-md   ">
             <div class="flex space-x-4">
@@ -46,7 +47,7 @@
                     </div>
                 </div>
 
-                <div class=" ">
+                {{-- <div class=" ">
                     <div class="">
                         <p class="mt-4 mb-4 underline font-semibold">Accounts</p>
                         <div class="flex justify-center">
@@ -94,7 +95,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> --}}
 
 
             </div>
@@ -105,26 +106,32 @@
 
                 @csrf
                 <!-- Username -->
-                <label for="username-adress-icon" class="block mb-2 text-sm font-medium ">Username</label>
-                <div class="relative mt-1 mb-8">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="gray">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
+                <div class="username">
+                    <label for="username-adress-icon" class="block mb-2 text-sm font-medium ">Username</label>
+                    <div class="relative mt-1">
+                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="gray">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <input type="text" id="username-adress-icon" name="username"
+                            class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
+                            placeholder="john1997" value="{{ old('username') }}">
                     </div>
-                    <input type="text" id="username-adress-icon" name="username"
-                        class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                        placeholder="name@gmail.com">
+                    @error('username')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
+                
 
-                <div class="flex  ">
+                <div class="flex  mt-8">
                     <!-- First Name -->
                     <div class="mr-10 w-full">
                         <label for="first-name-adress-icon" class="block mb-2 text-sm font-medium ">First
                             Name</label>
-                        <div class="relative mt-1 mb-8">
+                        <div class="relative mt-1 ">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                     viewBox="0 0 24 24" stroke="gray">
@@ -134,18 +141,18 @@
                             </div>
                             <input type="text" id="first-name-adress-icon" name="fname"
                                 class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                                placeholder="name@gmail.com">
-                            @error('fname')
-                                <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                            @enderror
+                                placeholder="John" value="{{ old('fname') }}">
                         </div>
+                            @error('fname')
+                                <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                            @enderror
                     </div>
 
 
                     <div class="w-full">
                         <!-- Last Name -->
                         <label for="last-name-adress-icon" class="block mb-2 text-sm font-medium ">Last Name</label>
-                        <div class="relative mt-1 mb-8">
+                        <div class="relative mt-1">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                     viewBox="0 0 24 24" stroke="gray">
@@ -155,57 +162,79 @@
                             </div>
                             <input type="text" id="last-name-adress-icon" name="lname"
                                 class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                                placeholder="name@gmail.com">
+                                placeholder="Doe" value="{{ old('lname') }}">
                         </div>
+                        @error('lname')
+                            <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
                 <!-- email -->
-                <label for="email-adress-icon" class="block mb-2 text-sm font-medium ">Email</label>
-                <div class="relative mt-1 mb-8">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="gray">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
+                <div class="email mt-8">
+                    <label for="email-adress-icon" class="block mb-2 text-sm font-medium ">Email</label>
+                    <div class="relative">
+                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="gray">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <input type="text" id="email-adress-icon" name="email"
+                            class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
+                            placeholder="johndoe@gmail.com" value="{{ old('email') }}">
                     </div>
-                    <input type="text" id="email-adress-icon" name="email"
-                        class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                        placeholder="name@gmail.com">
+                    @error('email')
+                    <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
+                
+                
 
 
                 <!-- password -->
-                <label for="password-adress-icon" class="block mb-2 text-sm font-medium ">Password</label>
-                <div class="relative mt-1 mb-8">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="gray">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                        </svg>
+                <div class="password mt-8">
+                    <label for="password-adress-icon" class="block mb-2 text-sm font-medium ">Password</label>
+                    <div class="relative mt-1 ">
+                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="gray">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                            </svg>
+                        </div>
+                        <input type="password" id="password-adress-icon" name="password"
+                            class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
+                            placeholder="Type your password here" value="{{ old('password') }}">
                     </div>
-                    <input type="password" id="password-adress-icon" name="password"
-                        class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                        placeholder="name@gmail.com">
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
+                
 
 
                 <!-- confirm passsword -->
-                <label for="password-adress-icon" class="block mb-2 text-sm font-medium ">Confirm Password</label>
-                <div class="relative mt-1 mb-8">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="gray">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
+                <div class="password_confirmation mt-8">
+                    <div class="confirm-password">
+                        <label for="password-adress-icon" class="block mb-2 text-sm font-medium ">Confirm Password</label>
+                        <div class="relative mt-1">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="gray">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                            </div>
+                            <input type="password" id="password-adress-icon" name="password_confirmation"
+                                class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
+                                placeholder="Type your password again" value="{{ old('password_confirmation') }}">
+                        </div>
                     </div>
-                    <input type="password" id="password-adress-icon" name="confirm-password"
-                        class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                        placeholder="name@gmail.com">
                 </div>
+                
+                
 
                 {{-- checkbox --}}
                 {{-- <div>
@@ -225,7 +254,7 @@
                     </div> --}}
 
 
-                <label for="password-adress-icon" class="block mb-4 text-sm font-medium ">Select One or More</label>
+                <label for="password-adress-icon" class="block mb-4 text-sm font-medium mt-8">Select One or More</label>
 
                 <div class=" flex">
 
@@ -338,51 +367,7 @@
 
             <!-- flex-3 -->
             <div class="col-span-4">
-                <p class="font-semibold">history</p>
-                <div class="overflow-y-auto h-screen grid grid-cols-1 divide-y">
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                    <p class="w-full mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-                        provident et non, at enim beatae! Vitae ipsum voluptate reprehenderit facilis. Nulla quas autem
-                        odio, distinctio numquam nemo molestias a quod.</p>
-                </div>
+                
             </div>
 
         </div>

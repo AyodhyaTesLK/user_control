@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLastLoginColumnToUsers extends Migration
+class AddHasOpsColumnToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddLastLoginColumnToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('last_login')->nullable();
+            $table->boolean('has_ops');
         });
     }
 
@@ -26,7 +26,7 @@ class AddLastLoginColumnToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('last_login');
+            $table->dropColumn('has_ops');
         });
     }
 }

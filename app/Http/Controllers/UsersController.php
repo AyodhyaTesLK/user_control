@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 
 class UsersController extends Controller
 {
@@ -13,13 +15,6 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    //another method to pass array to view
-    // public function index()
-    // {
-    //     $users_data = User::all();
-    //     return view('users.index', ['users' => $users_data]);
-    // }
 
     public function index()
     {
@@ -43,47 +38,38 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //data validation-----------------------------------------------------------------------
-        // $data = $this->validate($request, [
-        //     'fname' => 'required|max:255',
-        //     'lname' => 'nullable',
-        // ]);
+        $data = $request->only([
+            'fname',
+            'lname',
+            'email',
+            'username',
+        ]);
+        //get data from form
+        $data['password'] = bcrypt($request->password);
+        $data['has_crm'] = $request->has('has_crm');
+        $data['has_360'] = $request->has('has_360');
+        $data['has_ops'] = $request->has('has_ops');
+        $data['status'] = 1;
 
-        //get data from form--------------------------------------------------------------------
-        $user = new User;
-        $user->fname = $request->fname;
-        $user->lname = $request->lname;
+        //check if user add image and save it
+        $data['img_url'] = $this->saveAvatar($request);
+        $user = User::create($data);
+        return redirect('users')->with('flash_message', 'User Addedd!');
+    }
+
+    protected function saveAvatar(Request $request, $url = false){
+        if($url && Storage::disk('avatars')->exists($url)){
+            unlink(storage_path('app/public/avatars/'.$url));
+        }
         $img_url = '';
-        $user->email = $request->email;
-        $user->username = $request->username;
-        $user->password = bcrypt($request->password);
-        $user->has_crm = $request->has('has_crm');
-        $user->has_360 = $request->has('has_360');
-        $user->last_login = '1980-09-19';
-        $user->status = 1;
-
-        //check if user add image if it is not image url set as default.png
         if ($request->hasfile('img_url')) {
-
-            //save in public folder-----------------------------------------------------------------
-            // $photo_path = $request->file('img_url');
-            // $m_path = $photo_path->getClientOriginalName();
-            // $photo_path->move(public_path('images/'), $m_path);   //it will be save your image on public/images folder
-            // $user->update(['image' => "/images/{$m_path}"]);
-            // $img_url = 'images/' . $m_path;
-
-            //save in storage folder----------------------------------------------------------------
+            //save in storage folder
             $img_url = time() . '.' . $request->img_url->extension();
             $request->img_url->storeAs('public/avatars', $img_url);
         }
-
-        $user->img_url = $img_url;
-        // dd($user);
-        $user->save();
-        // return redirect('/adduser');
-        return redirect('users')->with('flash_message', 'User Addedd!');
+        return $img_url;
     }
 
     /**
@@ -92,9 +78,8 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::find($id);
         return view('users.show',compact('user'));
     }
 
@@ -104,10 +89,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
-        return view('users.edit')->with('user', $user);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -117,17 +101,13 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::find($id);
         $input = $request->all();
-        // $user->has_crm = $request->has('has_crm');
-        // $user->has_360 = $request->has('has_360');
-        
-        // if($input['has_360'] == "on"){
-
-        // }
-        
+        $input['has_crm'] = $request->has('has_crm');
+        $input['has_360'] = $request->has('has_360');
+        $input['has_ops'] = $request->has('has_ops'); 
+        $input['img_url'] = $this->saveAvatar($request, $user->img_url);
         $user->update($input);
         return redirect('users')->with('flash_message', 'User Updated!');
     }
@@ -138,9 +118,13 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        User::destroy($id);
+        //image delete from storage
+        if(Storage::disk('avatars')->exists($user->img_url)){
+            unlink(storage_path('app/public/avatars/'.$user->img_url));
+        }
+        $user->delete();
         return redirect('users')->with('flash_message', 'User deleted!');
     }
 }

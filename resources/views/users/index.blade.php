@@ -47,7 +47,7 @@
         </div>
 
 
-        <div class="flex justify-between px-8  text-lg font-semibold items-center my-8">
+        <div class="flex justify-between px-8  text-md font-semibold items-center my-4">
             <div>
                 <p>Showing 12 out of 100</p>
             </div>
@@ -67,28 +67,28 @@
             <table class="w-full rounded-tl-md rounded-tr-md">
                 <thead class="dark:bg-gray-300">
                     <tr>
-                        <th scope="col" class="px-6 py-4 text-sm font-semibold tracking-wider text-left uppercase ">
+                        <th scope="col" class="px-6 py-4 text-sm tracking-wider text-left uppercase ">
                             Client Name
                         </th>
-                        <th scope="col" class="px-6 py-3 text-sm font-semibold tracking-wider text-left  uppercase ">
+                        <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase ">
                             Username
                         </th>
-                        <th scope="col" class="px-6 py-3 text-sm font-semibold tracking-wider text-left  uppercase ">
+                        <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase ">
                             Email
                         </th>
-                        <th scope="col" class="px-6 py-3 text-sm font-semibold tracking-wider text-left  uppercase ">
+                        <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase ">
                             CRM/360
                         </th>
-                        <th scope="col" class="px-6 py-3 text-sm font-semibold tracking-wider text-left  uppercase ">
+                        <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase ">
                             Created Date
                         </th>
-                        <th scope="col" class="px-6 py-3 text-sm font-semibold tracking-wider text-left  uppercase ">
+                        <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase ">
                             Last Login
                         </th>
-                        <th scope="col" class="px-6 py-3 text-sm font-semibold tracking-wider text-left  uppercase ">
+                        <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase ">
                             Status
                         </th>
-                        <th scope="col" class="px-6 py-3 text-sm font-semibold tracking-wider text-left  uppercase">
+                        <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase">
                             Action
                         </th>
                     </tr>
@@ -98,29 +98,29 @@
                         <!-- Product 1 -->
                         <tr class="border-b">
                             <!-- name -->
-                            <td class="px-6 py-4 text-sm font-medium text-gray-800 flex items-center ">
+                            <td class="px-6 py-4 text-sm text-gray-800 flex items-center ">
                                 @if ($user->img_url == null)
-                                    <img src="storage/avatars/default.png" alt="avatar"
+                                    <img src="../storage/avatars/default.png" alt="avatar"
                                         class=" mx-3 w-10 h-10 rounded-full ">
                                 @endif
 
                                 @if ($user->img_url != null)
-                                    <img src="storage/avatars/{{ $user->img_url }}" alt="avatar"
+                                    <img src="../storage/avatars/{{ $user->img_url }}" alt="avatar"
                                         class=" mx-3 w-10 h-10 rounded-full ">
                                 @endif
                                 {{-- <img src="storage/avatars/{{ $user->img_url }}" alt="avatar"
                                     class=" mx-3 w-10 h-10 rounded-full object-cover"> --}}
 
-                                {{ $user->name }}
+                                {{ $user->fname }}  {{ $user->lname }}
                             </td>
 
                             <!-- Username -->
-                            <td class="px-6 py-4 text-sm font-medium text-gray-800 ">
+                            <td class="px-6 py-4 text-sm text-gray-800 ">
                                 {{ $user->username }}
                             </td>
 
                             <!-- email -->
-                            <td class="px-6 py-4 text-sm font-medium text-gray-800 ">
+                            <td class="px-6 py-4 text-sm text-gray-800 ">
                                 {{ $user->email }}
                             </td>
 
@@ -128,34 +128,39 @@
                             <td class="px-6 py-4 text-sm  ">
                                 @if ($user->has_crm)
                                     <button
-                                        class="px-2 py-1 bg-blue-500 rounded-lg mx-1 font-semibold text-white shadow hover:bg-blue-700 ">CRM</button>
+                                        class="px-2 py-1 bg-blue-500 rounded-lg mx-1 text-white shadow hover:bg-blue-700 ">CRM</button>
                                 @endif
 
                                 @if ($user->has_360)
                                     <button
-                                        class="px-2 py-1 bg-yellow-500 rounded-lg font-semibold text-white shadow hover:bg-yellow-700">360</button>
+                                        class="px-2 py-1 bg-yellow-500 rounded-lg text-white shadow hover:bg-yellow-700">360</button>
+                                @endif
+
+                                @if ($user->has_ops)
+                                    <button
+                                        class="px-2 py-1 bg-red-500 rounded-lg text-white shadow hover:bg-yellow-700">OPS</button>
                                 @endif
                             </td>
 
                             <!-- created date -->
-                            <td class="px-6 py-4 text-sm font-medium  whitespace-nowrap">
+                            <td class="px-6 py-4 text-sm  whitespace-nowrap">
                                 {{ $user->created_at->format('d M Y') }}
                             </td>
 
                             <!-- last login -->
-                            <td class="px-6 py-4 text-sm font-medium  whitespace-nowrap">
+                            <td class="px-6 py-4 text-sm  whitespace-nowrap">
                                 {{ $user->created_at->format('d M Y , G:i') }}
                             </td>
 
                             <!-- status -->
-                            <td class="px-6 py-4 text-sm font-medium  whitespace-nowrap">
+                            <td class="px-6 py-4 text-sm  whitespace-nowrap">
                                 @if ($user->status)
-                                    <button
-                                        class="px-2 py-1 bg-green-500 rounded-lg mx-1 font-semibold text-white">Active</button>
+                                    <span
+                                        class="px-2 py-1 bg-green-500 rounded-lg mx-1  text-white">Active</button>
 
 
                                 @else($user->status)
-                                    <button class="px-2 py-1 bg-gray-500 rounded-lg mx-1 font-semibold text-white">Not
+                                    <span class="px-2 py-1 bg-gray-500 rounded-lg mx-1  text-white">Not
                                         Active</button>
                                 @endif
                             </td>

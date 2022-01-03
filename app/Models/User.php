@@ -25,6 +25,7 @@ class User extends Authenticatable
         'username',
         'has_360',
         'has_crm',
+        'has_ops',
         'img_url',
         'status'
     ];

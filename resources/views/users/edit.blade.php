@@ -182,6 +182,20 @@
                         placeholder="name@gmail.com" value="{{ $user->email }}">
                 </div>
 
+                <!-- current password -->
+                <label for="password-adress-icon" class="block mb-2 text-sm font-medium ">Current Password</label>
+                <div class="relative mt-1 mb-8">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="gray">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                        </svg>
+                    </div>
+                    <input type="password" id="password-adress-icon" name="password"
+                        class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
+                        placeholder="Type your current password here">
+                </div>
 
                 <!-- password -->
                 <label for="password-adress-icon" class="block mb-2 text-sm font-medium ">Password</label>
@@ -195,7 +209,7 @@
                     </div>
                     <input type="password" id="password-adress-icon" name="password"
                         class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                        placeholder="name@gmail.com">
+                        placeholder="Type your new password here">
                 </div>
 
 
@@ -211,25 +225,8 @@
                     </div>
                     <input type="password" id="password-adress-icon" name="confirm-password"
                         class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                        placeholder="name@gmail.com">
+                        placeholder="Type your new password again here">
                 </div>
-
-                {{-- checkbox --}}
-                {{-- <div>
-                        <label for="password-adress-icon" class="block mb-2 text-sm font-medium ">Select One Or
-                            More</label>
-                        <div class="flex">
-                            <div id="ck-button"
-                                class="m-1 bg-orange-300 rounded-sm border-solid float-left overflow-auto hover:bg-red-600">
-                                <label class="float-left w-16">
-                                    <input type="checkbox" value="1"
-                                        class="absolute mr-28 -top-4 checked:bg-cyan-800 checked:text-white">
-                                    <span
-                                        class="text-center pl-1 pt-0 block checked:bg-cyan-800 checked:text-white m-0 p-0">CRM</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div> --}}
 
 
                 <label for="password-adress-icon" class="block mb-4 text-sm font-medium ">Select One or More</label>
@@ -245,7 +242,7 @@
                             <!-- toggle -->
                             <div class="relative">
                                 <!-- input -->
-                                <input type="checkbox" id="toggleA" class="sr-only" name="has_360" @if ($user->has_360) checked @endif>
+                                <input type="checkbox" id="toggleA" class="sr-only" value="1" name="has_360" @if ($user->has_360) checked @endif>
                                 <!-- line -->
                                 <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
                                 <!-- dot -->
@@ -267,7 +264,7 @@
                             <!-- toggle -->
                             <div class="relative">
                                 <!-- input -->
-                                <input type="checkbox" id="toggleB" class="sr-only" name="has_crm" @if ($user->has_crm) checked @endif>
+                                <input type="checkbox" id="toggleB" class="sr-only" value="1" name="has_crm" @if ($user->has_crm) checked @endif>
                                 <!-- line -->
                                 <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
                                 <!-- dot -->
@@ -289,7 +286,7 @@
                             <!-- toggle -->
                             <div class="relative">
                                 <!-- input -->
-                                <input type="checkbox" id="toggleC" class="sr-only" name="has_ops">
+                                <input type="checkbox" id="toggleC" class="sr-only" value="1" name="has_ops" @if ($user->has_ops) checked @endif>
                                 <!-- line -->
                                 <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
                                 <!-- dot -->
@@ -380,6 +377,13 @@
 
         </div>
     </div>
+
+    <style>
+        input:checked ~ .dot {
+            transform: translateX(100%);
+            background-color: #48bb78;
+        }
+    </style>
 
 
 </x-layout>

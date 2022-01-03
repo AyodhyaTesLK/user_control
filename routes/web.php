@@ -3,6 +3,7 @@
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 
 /*
@@ -43,6 +44,17 @@ Route::resource('/users', UsersController::class);
 
 
 
-
 //page routes
 Route::get('/about', [PagesController::class, 'index']);
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
