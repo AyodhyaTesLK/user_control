@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\PagesController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
@@ -39,13 +39,13 @@ use App\Http\Controllers\HomeController;
 // Route::post('/adduser', [UsersController::class, 'store']);
 
 
-Route::resource('/users', UsersController::class);
+Route::resource('/users', UserController::class);
 
 
 
 
 //page routes
-Route::get('/about', [PagesController::class, 'index']);
+Route::get('/about', [PageController::class, 'index']);
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -58,3 +58,6 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::get('/', function () {
+    return view('welcome');
+});

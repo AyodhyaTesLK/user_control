@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNameColumnToCompaniesTable extends Migration
+class CreateConfigurationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class AddNameColumnToCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::table('companies', function (Blueprint $table) {
-            $table->string('name');
-            $table->string('logo');
-            $table->string('country');
-            $table->string('city');
-            $table->string('dir_path');
-            $table->string('url');
-            $table->string('street_address');
-            
-        
+        Schema::create('configurations', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('key');
+            $table->string('value');
+            $table->string('description');
+            $table->string('default');
+            $table->string('domain');
+            $table->foreignId('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('default')->onUpdate('cascade');
+
             //CONFIGURATION
             //company id
             //key
@@ -30,21 +31,14 @@ class AddNameColumnToCompaniesTable extends Migration
             //description
             //default
             //domain
+
             // $table->string('email_server');
             // $table->string('email_username');
             // $table->string('email_password');
 
-            // $table->string('hot_line_contact');
-            // $table->string('operation_email');
-            // $table->string('helpdesk_email');
-            // $table->string('customer_support_email');
-            // $table->string('supply_email');
-
             // $table->string('facebook_url');
             // $table->string('twitter_url');
             // $table->string('instagram_url');
-
-            
 
             // $table->string('picklist_item_limit');
             // $table->string('picklist_order_limit');
@@ -56,7 +50,6 @@ class AddNameColumnToCompaniesTable extends Migration
             // $table->string('sms_key');
             // $table->string('sms_mask');
             // $table->string('sms_document');
-
         });
     }
 
@@ -67,11 +60,6 @@ class AddNameColumnToCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::table('companies', function (Blueprint $table) {
-            $table->dropColumn('name');
-            $table->dropColumn('logo');
-            $table->dropColumn('dir_path');
-            $table->dropColumn('url');
-        });
+        Schema::dropIfExists('configurations');
     }
 }

@@ -29,11 +29,11 @@ class UpdatePostRequest extends FormRequest
             'lname' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|min:6|confirmed',
-            'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
-                if (!\Hash::check($value, $user->password)) {
-                    return $fail(__('The current password is incorrect.'));
-                }
-            }],
+            // 'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
+            //     if (!\Hash::check($value, $user->password)) {
+            //         return $fail(__('The current password is incorrect.'));
+            //     }
+            // }],
         ];
     }
 }

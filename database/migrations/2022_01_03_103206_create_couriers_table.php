@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourierTable extends Migration
+class CreateCouriersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCourierTable extends Migration
      */
     public function up()
     {
-        Schema::create('courier', function (Blueprint $table) {
+        Schema::create('couriers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('courier_credentials');
@@ -22,6 +22,8 @@ class CreateCourierTable extends Migration
             $table->string('courier_return_email');
             $table->string('courier_logo');
             $table->string('courier_api_document');
+            $table->foreignId('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('default')->onUpdate('cascade');
         });
     }
 
@@ -32,6 +34,6 @@ class CreateCourierTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('courier');
+        Schema::dropIfExists('couriers');
     }
 }
