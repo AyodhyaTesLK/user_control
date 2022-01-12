@@ -16,14 +16,14 @@ class CreateCouriersTable extends Migration
         Schema::create('couriers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('courier_credentials');
-            $table->string('courier_return_address');
-            $table->string('courier_account_id');
-            $table->string('courier_return_email');
-            $table->string('courier_logo');
-            $table->string('courier_api_document');
-            $table->foreignId('company_id');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('default')->onUpdate('cascade');
+            $table->string('courier_credentials')->nullable();
+            $table->string('courier_return_address')->nullable();
+            $table->string('courier_account_id')->nullable();
+            $table->string('courier_return_email')->nullable();
+            $table->string('courier_logo')->nullable();
+            $table->string('courier_api_doc_url')->nullable();
+            $table->foreignId('company_id')->nullable();
+            // $table->foreign('company_id')->references('id')->on('companies')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 

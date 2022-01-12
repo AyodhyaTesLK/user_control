@@ -16,19 +16,19 @@ class CreateShopifyConfigsTable extends Migration
         Schema::create('shopify_configs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('shopify_url');
-            $table->string('shopify_key');
-            $table->string('shopify_password');
-            $table->string('shopify_hook_secret');
-            $table->string('shopify_store_city');
-            $table->string('shopify_country');
-            $table->string('shopify_phone');
-            $table->string('shopify_province');
-            $table->string('shopify_zip_code');
-            $table->string('shopify_currency');
-            $table->string('shopify_exchange_rate');
-            $table->foreignId('company_id');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('default')->onUpdate('cascade');
+            $table->string('storefront_url')->nullable();
+            $table->string('storefront_key')->nullable();
+            $table->string('storefront_password')->nullable();
+            $table->string('storefront_hook_secret')->nullable();
+            $table->string('storefront_city')->nullable();
+            $table->string('storefront_country')->nullable();
+            $table->string('storefront_mobile')->nullable();
+            $table->string('storefront_province')->nullable();
+            $table->string('storefront_zipcode')->nullable();
+            $table->string('storefront_currency')->nullable();
+            $table->string('storefront_exchange_rate')->nullable();
+            $table->foreignId('company_id')->nullable();
+            // $table->foreign('company_id')->references('id')->on('companies')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 

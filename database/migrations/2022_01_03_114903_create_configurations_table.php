@@ -16,13 +16,13 @@ class CreateConfigurationsTable extends Migration
         Schema::create('configurations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('key');
-            $table->string('value');
-            $table->string('description');
-            $table->string('default');
-            $table->string('domain');
-            $table->foreignId('company_id');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('default')->onUpdate('cascade');
+            $table->string('key')->nullable();
+            $table->string('value')->nullable();
+            $table->string('description')->nullable();
+            $table->string('default')->nullable();
+            $table->string('domain')->nullable();
+            $table->foreignId('company_id')->nullable();
+            // $table->foreign('company_id')->references('id')->on('companies')->onDelete('CASCADE')->onUpdate('CASCADE');
 
             //CONFIGURATION
             //company id
@@ -51,6 +51,8 @@ class CreateConfigurationsTable extends Migration
             // $table->string('sms_mask');
             // $table->string('sms_document');
         });
+
+        
     }
 
     /**
