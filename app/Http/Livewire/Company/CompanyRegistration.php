@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Livewire\Company;
+
+use App\Models\AllConfiguration;
 use Livewire\Component;
 use App\Models\Company;
 use App\Models\ShopifyConfig;
@@ -8,10 +10,14 @@ use App\Models\Courier;
 use App\Models\Configuration;
 use App\Models\User;
 
+use function GuzzleHttp\Promise\all;
+
 class CompanyRegistration extends Component
 {
+
     public $currentPage = 1;
     public $success;
+    public $configs;
 
     // company details
     public $first_name;
@@ -28,19 +34,6 @@ class CompanyRegistration extends Component
     public $supply_email;
     public $logo;
 
-    //storefront details
-    public $storefront_url;
-    public $storefront_key;
-    public $storefront_password;
-    public $storefront_hook_secret;
-    public $storefront_city;
-    public $storefront_country;
-    public $storefront_province;
-    public $storefront_zipcode;
-    public $storefront_mobile;
-    public $storefront_currency;
-    public $storefront_exchange_rate;
-
     // courier details 
     public $courier_credentials;
     public $courier_return_address;
@@ -49,46 +42,9 @@ class CompanyRegistration extends Component
     public $courier_api_doc_url;
     public $courier_logo;
 
-    // Configuration Informations(Emails)
-    public $configuration = [
-        "smtp_pop_imap",
-        "email_config_username",
-        "email_password",
-        "sms_api_base_url",
-        "sms_configuration_username",
-        "sms_configuration_password",
-        "sms_configuration_key",
-        "sms_configuration_mask",
-        "sms_api_document_url",
-        "facebook_url",
-        "instagram_url",
-        "twitter_url",
-        "picklist_item_limit",
-        "picklist_order_limit",
-        "cod_max_limit_to_approve",
-    ];
+    public ShopifyConfig $storefronts;
 
-    public $smtp_pop_imap;
-    public $email_config_username;
-    public $email_password;
-
-    // Configuration Informations(SMS)
-    public $sms_api_base_url;
-    public $sms_configuration_username;
-    public $sms_configuration_password;
-    public $sms_configuration_key;
-    public $sms_configuration_mask;
-    public $sms_api_document_url;
-
-    // social media urls
-    public $facebook_url;
-    public $instagram_url;
-    public $twitter_url;
-
-    // Configuration Informations(Order Fullfillment)
-    public $picklist_item_limit;
-    public $picklist_order_limit;
-    public $cod_max_limit_to_approve;
+    
 
 
     public $pages = [
@@ -123,11 +79,11 @@ class CompanyRegistration extends Component
     ];
 
     private $validationRules = [
-        1 => [
-            'first_name' => ['required','max:255'],
-            'last_name' => ['required','max:255'],
-            'email_address' => ['required', 'email', 'unique:companies,email_address','max:255'],
-        ],
+        // 1 => [
+        //     'first_name' => ['required','max:255'],
+        //     'last_name' => ['required','max:255'],
+        //     'email_address' => ['required', 'email', 'unique:companies,email_address','max:255'],
+        // ],
         // 2 => [
         //     'password' => ['required', 'string', 'min:8'],
         //     'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
@@ -154,14 +110,31 @@ class CompanyRegistration extends Component
         // ],
     ];
 
+
+    protected $rules = [
+        'configs.*.value' => 'required|string|max:255',
+        'storefronts.url' => 'required',
+        'storefronts.key' => 'required'
+    ];
+
+
+    public function mount()
+    {
+        $this->configs = AllConfiguration::all();
+        $this->storefronts = new ShopifyConfig();
+        // dd($this->configs->toArray(), $this->currentPage);
+        // dd($configs[0]['batch_no']);
+    }
+
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName, $this->validationRules[$this->currentPage]);
+        // dd($this->configs);
+        // $this->validateOnly($propertyName, $this->validationRules[$this->currentPage]);
     }
 
     public function goToNextPage()
     {
-        $this->validate($this->validationRules[$this->currentPage]);
+        // $this->validate($this->validationRules[$this->currentPage]);
         $this->currentPage++;
     }
 
@@ -181,25 +154,27 @@ class CompanyRegistration extends Component
 
         // $this->validate($rules);
 
-        $configuration = [
-            ["smtp_pop_imap",$this->smtp_pop_imap,"description","default","domain"],
-            ["email_config_username",$this->email_config_username,"description","default","domain"],
-            ["email_password",$this->email_password,"description","default","domain"],
-            ["sms_api_base_url",$this->sms_api_base_url,"description","default","domain"],
-            ["sms_configuration_username",$this->sms_configuration_username,"description","default","domain"],
-            ["sms_configuration_password",$this->sms_configuration_password,"description","default","domain"],
-            ["sms_configuration_key",$this->sms_configuration_key,"description","default","domain"],
-            ["sms_configuration_mask",$this->sms_configuration_mask,"description","default","domain"],
-            ["sms_api_document_url",$this->sms_api_document_url,"description","default","domain"],
-            ["facebook_url",$this->facebook_url,"description","default","domain"],
-            ["instagram_url",$this->instagram_url,"description","default","domain"],
-            ["twitter_url",$this->twitter_url,"description","default","domain"],
-            ["picklist_item_limit",$this->picklist_item_limit,"description","default","domain"],
-            ["picklist_order_limit",$this->picklist_order_limit,"description","default","domain"],
-            ["cod_max_limit_to_approve",$this->cod_max_limit_to_approve,"description","default","domain"],
-        ];
+        // $configuration = [
+        //     ["smtp_pop_imap",$this->smtp_pop_imap,"description","default","domain"],
+        //     ["email_config_username",$this->email_config_username,"description","default","domain"],
+        //     ["email_password",$this->email_password,"description","default","domain"],
+        //     ["sms_api_base_url",$this->sms_api_base_url,"description","default","domain"],
+        //     ["sms_configuration_username",$this->sms_configuration_username,"description","default","domain"],
+        //     ["sms_configuration_password",$this->sms_configuration_password,"description","default","domain"],
+        //     ["sms_configuration_key",$this->sms_configuration_key,"description","default","domain"],
+        //     ["sms_configuration_mask",$this->sms_configuration_mask,"description","default","domain"],
+        //     ["sms_api_document_url",$this->sms_api_document_url,"description","default","domain"],
+        //     ["facebook_url",$this->facebook_url,"description","default","domain"],
+        //     ["instagram_url",$this->instagram_url,"description","default","domain"],
+        //     ["twitter_url",$this->twitter_url,"description","default","domain"],
+        //     ["picklist_item_limit",$this->picklist_item_limit,"description","default","domain"],
+        //     ["picklist_order_limit",$this->picklist_order_limit,"description","default","domain"],
+        //     ["cod_max_limit_to_approve",$this->cod_max_limit_to_approve,"description","default","domain"],
+        // ];
 
         // dd($configuration[0][0]);
+
+        
 
         $company = Company::create([
             'first_name' => $this->first_name,
@@ -220,22 +195,25 @@ class CompanyRegistration extends Component
             'logo' => $this->logo,
         ]);
 
-        // $company->shopify_configs()->create()
+        // dd($this->storefronts);
+        $company->shopify_configs()->create($this->storefronts);
+        // $company = ShopifyConfig::create($this->storefronts);
+        // $company->shopify_configs()->createOne($this->storefronts);
 
-        ShopifyConfig::create([
-            'storefront_url' =>$this->storefront_url,
-            'storefront_key' =>$this->storefront_key,
-            'storefront_password' =>$this->storefront_password,
-            'storefront_hook_secret' =>$this->storefront_hook_secret,
-            'storefront_city' =>$this->storefront_city,
-            'storefront_country' =>$this->storefront_country,
-            'storefront_mobile' =>$this->storefront_mobile,
-            'storefront_province' =>$this->storefront_province,
-            'storefront_zipcode' =>$this->storefront_zipcode,
-            'storefront_currency' =>$this->storefront_currency,
-            'storefront_exchange_rate' =>$this->storefront_exchange_rate,
-            // 'company_id' => $company->id
-        ]);
+        // ShopifyConfig::create([
+        //     'storefront_url' =>$this->storefront_url,
+        //     'storefront_key' =>$this->storefront_key,
+        //     'storefront_password' =>$this->storefront_password,
+        //     'storefront_hook_secret' =>$this->storefront_hook_secret,
+        //     'storefront_city' =>$this->storefront_city,
+        //     'storefront_country' =>$this->storefront_country,
+        //     'storefront_mobile' =>$this->storefront_mobile,
+        //     'storefront_province' =>$this->storefront_province,
+        //     'storefront_zipcode' =>$this->storefront_zipcode,
+        //     'storefront_currency' =>$this->storefront_currency,
+        //     'storefront_exchange_rate' =>$this->storefront_exchange_rate,
+        //     // 'company_id' => $company->id
+        // ]);
 
         Courier::create([
             'courier_credentials' => $this->courier_credentials,
@@ -246,16 +224,13 @@ class CompanyRegistration extends Component
             'courier_api_doc_url' => $this->courier_api_doc_url,
         ]);
 
-        for($x = 0; $x < sizeof($configuration); $x++){
-            $y = 0 ;
-            Configuration::create([
-                'key' => $configuration[$x][$y],
-                'value' => $configuration[$x][$y+1],
-                'description' => $configuration[$x][$y+2],
-                'default' => $configuration[$x][$y+3],
-                'domain' => $configuration[$x][$y+4],
-            ]);
-        }
+        $company->cofigurations()->createMany($this->configs->toArray());
+
+        // $this->configs->configs()->create(
+        //     $this->configs['']
+        // );
+
+        
 
         
 

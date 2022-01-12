@@ -21,16 +21,11 @@ class CreateAllConfigurationsTable extends Migration
             $table->string('description')->nullable();
             $table->string('default')->nullable(); 
             $table->string('domain')->nullable();  //email,sms,social media
-            $table->string('batch_no')->nullable(); 
+            $table->unsignedInteger('batch_no')->nullable(); // 1 = personal info, 2 = storefront info, 3 = shopify info, 4 = email info, 5 = sms onfo, 6 = social media, 7 order full fillment info
             $table->string('type')->nullable();
             $table->string('options')->nullable();
-                // 1 = personal info,
-                // 2 = storefront info
-                // 3 = shopify info
-                // 4 = email info
-                // 5 = sms onfo
-                // 6 = social media
-                // 7 order full fillment info
+            $table->boolean('is_required')->default(0);
+            $table->string('validation')->nullable();
         });
     }
 

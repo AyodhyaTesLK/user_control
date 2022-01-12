@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "email",
-                "batch_no" => "4",
+                "batch_no" => 4,
                 "type" => "text",
             ],
             [
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "email",
-                "batch_no" => "4",
+                "batch_no" => 4,
                 "type" => "text",
             ],
             [
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "email",
-                "batch_no" => "4",
+                "batch_no" => 4,
                 "type" => "text",
             ],
             [
@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "sms",
-                "batch_no" => "5",
+                "batch_no" => 5,
                 "type" => "text",
             ],
             [
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "sms",
-                "batch_no" => "5",
+                "batch_no" => 5,
                 "type" => "text",
             ],
             [
@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "sms",
-                "batch_no" => "5",
+                "batch_no" => 5,
                 "type" => "text",
             ],
             [
@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "sms",
-                "batch_no" => "5",
+                "batch_no" => 5,
                 "type" => "text",
             ],
             [
@@ -108,7 +108,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "sms",
-                "batch_no" => "5",
+                "batch_no" => 5,
                 "type" => "text",
             ],
             [
@@ -117,7 +117,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "sms",
-                "batch_no" => "5",
+                "batch_no" => 5,
                 "type" => "text",
             ],
             [
@@ -126,7 +126,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "social_media",
-                "batch_no" => "6",
+                "batch_no" => 6,
                 "type" => "text",
             ],
             [
@@ -135,7 +135,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "social_media",
-                "batch_no" => "6",
+                "batch_no" => 6,
                 "type" => "text",
             ],
             [
@@ -144,7 +144,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "social_media",
-                "batch_no" => "6",
+                "batch_no" => 6,
                 "type" => "text",
             ],
             [
@@ -153,7 +153,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "social_media",
-                "batch_no" => "7",
+                "batch_no" => 7,
                 "type" => "text",
             ],
             [
@@ -162,7 +162,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "social_media",
-                "batch_no" => "7",
+                "batch_no" => 7,
                 "type" => "text",
             ],
             [
@@ -172,7 +172,7 @@ class DatabaseSeeder extends Seeder
                 "description" => "description",
                 "default" => "default",
                 "domain" => "social_media",
-                "batch_no" => "7",
+                "batch_no" => 7,
                 "type" => "text",
             ],
         ];
