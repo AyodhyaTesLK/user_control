@@ -1,7 +1,7 @@
 <x-layout>
     
     <div class="w-full">
-        {{ dd(Auth::user()) }}
+        
         <!-- add user heading start-->
         <div class="flex justify-between px-8 py-3  shadow-md   ">
             <div class="flex space-x-4">

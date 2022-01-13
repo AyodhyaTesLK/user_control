@@ -9,6 +9,7 @@ use App\Models\ShopifyConfig;
 use App\Models\Courier;
 use App\Models\Configuration;
 use App\Models\User;
+use PhpParser\Node\Expr\Cast\Object_;
 
 use function GuzzleHttp\Promise\all;
 
@@ -35,17 +36,15 @@ class CompanyRegistration extends Component
     public $logo;
 
     // courier details 
-    public $courier_credentials;
-    public $courier_return_address;
-    public $courier_account_id;
-    public $courier_return_email;
-    public $courier_api_doc_url;
-    public $courier_logo;
+    // public $courier_credentials;
+    // public $courier_return_address;
+    // public $courier_account_id;
+    // public $courier_return_email;
+    // public $courier_api_doc_url;
+    // public $courier_logo;
 
-    public ShopifyConfig $storefronts;
-
-    
-
+    public ?ShopifyConfig $storefronts = null;
+    public ?Courier $couriers = null;
 
     public $pages = [
         1 => [
@@ -79,51 +78,94 @@ class CompanyRegistration extends Component
     ];
 
     private $validationRules = [
-        // 1 => [
-        //     'first_name' => ['required','max:255'],
-        //     'last_name' => ['required','max:255'],
-        //     'email_address' => ['required', 'email', 'unique:companies,email_address','max:255'],
-        // ],
-        // 2 => [
-        //     'password' => ['required', 'string', 'min:8'],
-        //     'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
-        // ],
-        // 3 => [
-        //     'password' => ['required', 'string', 'min:8'],
-        //     'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
-        // ],
-        // 4 => [
-        //     'password' => ['required', 'string', 'min:8'],
-        //     'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
-        // ],
-        // 5 => [
-        //     'password' => ['required', 'string', 'min:8'],
-        //     'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
-        // ],
-        // 6 => [
-        //     'password' => ['required', 'string', 'min:8'],
-        //     'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
-        // ],
-        // 7 => [
-        //     'password' => ['required', 'string', 'min:8'],
-        //     'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
-        // ],
+        1 => [
+            'first_name' => ['required','max:255'],
+            'last_name' => ['required','max:255'],
+            'email_address' => ['required', 'email', 'unique:companies,email_address','max:255'],
+        ],
+        2 => [
+            'password' => ['required', 'string', 'min:8'],
+            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+        ],
+        3 => [
+            'password' => ['required', 'string', 'min:8'],
+            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+        ],
+        4 => [
+            'password' => ['required', 'string', 'min:8'],
+            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+        ],
+        5 => [
+            'password' => ['required', 'string', 'min:8'],
+            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+        ],
+        6 => [
+            'password' => ['required', 'string', 'min:8'],
+            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+        ],
+        7 => [
+            'password' => ['required', 'string', 'min:8'],
+            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+        ],
     ];
-
 
     protected $rules = [
-        'configs.*.value' => 'required|string|max:255',
+        // 'configs.*.value' => 'nullable',
         'storefronts.url' => 'required',
-        'storefronts.key' => 'required'
+        'storefronts.key' => 'required',
+        'storefronts.password' => 'required',
+        'storefronts.hook_secret' => 'required',
+        'storefronts.city' => 'required',
+        'storefronts.country' => 'required',
+        'storefronts.mobile' => 'required',
+        'storefronts.province' => 'required',
+        'storefronts.zipcode' => 'required',
+        'storefronts.currency' => 'required',
+        'storefronts.exchange_rate' => 'required',
+        'storefronts.company_id' => 'required',
+        'couriers.credentials' => 'required',
+        'couriers.return_address' => 'required',
+        'couriers.account_id' => 'required',
+        'couriers.return_email' => 'required',
+        'couriers.logo' => 'required',
+        'couriers.api_doc_url' => 'required',
     ];
+
+    protected function rules()
+    {
+        // return [
+        //     'name' => 'required|min:6',
+        //     'email' => ['required', 'email', 'not_in:' . auth()->user()->email],
+        // ];
+        $this->validationMaker();
+        return $this->rules;
+    }
+
+    
 
 
     public function mount()
     {
         $this->configs = AllConfiguration::all();
+        $this->validationMaker();
+        // dd($this->rules);
+        // $dynamic_validation = array_merge($this->rules,json_decode($this->configs[0]['validation'],true));
+        // dd($dynamic_validation);
+
+        // dd(json_decode($this->configs[0]['validation'],true));
         $this->storefronts = new ShopifyConfig();
+        $this->couriers = new Courier();
+        // dd($this->storefronts);
         // dd($this->configs->toArray(), $this->currentPage);
         // dd($configs[0]['batch_no']);
+    }
+
+    public function validationMaker(){
+
+        for($x = 0; $x < sizeof($this->configs); $x++){
+            $this->rules["configs.".$x.".value"] = $this->configs[$x]['validation'];
+        }
+        
     }
 
     public function updated($propertyName)
@@ -154,28 +196,6 @@ class CompanyRegistration extends Component
 
         // $this->validate($rules);
 
-        // $configuration = [
-        //     ["smtp_pop_imap",$this->smtp_pop_imap,"description","default","domain"],
-        //     ["email_config_username",$this->email_config_username,"description","default","domain"],
-        //     ["email_password",$this->email_password,"description","default","domain"],
-        //     ["sms_api_base_url",$this->sms_api_base_url,"description","default","domain"],
-        //     ["sms_configuration_username",$this->sms_configuration_username,"description","default","domain"],
-        //     ["sms_configuration_password",$this->sms_configuration_password,"description","default","domain"],
-        //     ["sms_configuration_key",$this->sms_configuration_key,"description","default","domain"],
-        //     ["sms_configuration_mask",$this->sms_configuration_mask,"description","default","domain"],
-        //     ["sms_api_document_url",$this->sms_api_document_url,"description","default","domain"],
-        //     ["facebook_url",$this->facebook_url,"description","default","domain"],
-        //     ["instagram_url",$this->instagram_url,"description","default","domain"],
-        //     ["twitter_url",$this->twitter_url,"description","default","domain"],
-        //     ["picklist_item_limit",$this->picklist_item_limit,"description","default","domain"],
-        //     ["picklist_order_limit",$this->picklist_order_limit,"description","default","domain"],
-        //     ["cod_max_limit_to_approve",$this->cod_max_limit_to_approve,"description","default","domain"],
-        // ];
-
-        // dd($configuration[0][0]);
-
-        
-
         $company = Company::create([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -196,7 +216,9 @@ class CompanyRegistration extends Component
         ]);
 
         // dd($this->storefronts);
-        $company->shopify_configs()->create($this->storefronts);
+        // dd($this->storefronts->toArray());
+        $company->shopify_configs()->create($this->storefronts->toArray());
+        $company->couriers()->create($this->couriers->toArray());
         // $company = ShopifyConfig::create($this->storefronts);
         // $company->shopify_configs()->createOne($this->storefronts);
 
@@ -215,22 +237,16 @@ class CompanyRegistration extends Component
         //     // 'company_id' => $company->id
         // ]);
 
-        Courier::create([
-            'courier_credentials' => $this->courier_credentials,
-            'courier_return_address' => $this->courier_return_address,
-            'courier_account_id' => $this->courier_account_id,
-            'courier_return_email' => $this->courier_return_email,
-            'courier_logo' => $this->courier_logo,
-            'courier_api_doc_url' => $this->courier_api_doc_url,
-        ]);
+        // Courier::create([
+        //     'courier_credentials' => $this->courier_credentials,
+        //     'courier_return_address' => $this->courier_return_address,
+        //     'courier_account_id' => $this->courier_account_id,
+        //     'courier_return_email' => $this->courier_return_email,
+        //     'courier_logo' => $this->courier_logo,
+        //     'courier_api_doc_url' => $this->courier_api_doc_url,
+        // ]);
 
         $company->cofigurations()->createMany($this->configs->toArray());
-
-        // $this->configs->configs()->create(
-        //     $this->configs['']
-        // );
-
-        
 
         
 

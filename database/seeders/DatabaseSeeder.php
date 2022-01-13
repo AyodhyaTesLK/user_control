@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "email",
                 "batch_no" => 4,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "email_config_username",
@@ -56,6 +57,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "email",
                 "batch_no" => 4,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "email_password",
@@ -65,6 +67,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "email",
                 "batch_no" => 4,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "sms_api_base_url",
@@ -74,6 +77,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "sms",
                 "batch_no" => 5,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "sms_configuration_username",
@@ -83,6 +87,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "sms",
                 "batch_no" => 5,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "sms_configuration_password",
@@ -92,6 +97,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "sms",
                 "batch_no" => 5,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "sms_configuration_key",
@@ -101,6 +107,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "sms",
                 "batch_no" => 5,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "sms_configuration_mask",
@@ -110,6 +117,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "sms",
                 "batch_no" => 5,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "sms_api_document_url",
@@ -119,6 +127,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "sms",
                 "batch_no" => 5,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "facebook_url",
@@ -128,6 +137,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "social_media",
                 "batch_no" => 6,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "instagram_url",
@@ -137,6 +147,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "social_media",
                 "batch_no" => 6,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "twitter_url",
@@ -146,6 +157,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "social_media",
                 "batch_no" => 6,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "picklist_item_limit",
@@ -155,6 +167,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "social_media",
                 "batch_no" => 7,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "picklist_order_limit",
@@ -164,6 +177,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "social_media",
                 "batch_no" => 7,
                 "type" => "text",
+                "validation" => "required",
             ],
             [
                 "key" => "cod_max_limit_to_approve",
@@ -174,6 +188,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "social_media",
                 "batch_no" => 7,
                 "type" => "text",
+                "validation" => "required",
             ],
         ];
 
