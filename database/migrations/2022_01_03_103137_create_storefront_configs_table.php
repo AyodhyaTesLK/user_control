@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShopifyConfigsTable extends Migration
+class CreateStorefrontConfigsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateShopifyConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shopify_configs', function (Blueprint $table) {
+        Schema::create('storefront_configs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('url')->nullable();
@@ -39,6 +39,6 @@ class CreateShopifyConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shopify_configs');
+        Schema::dropIfExists('storefront_configs');
     }
 }

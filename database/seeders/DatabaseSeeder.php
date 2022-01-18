@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Configuration;
 use App\Models\Courier;
-use App\Models\ShopifyConfig;
+use App\Models\StorefrontConfig;
 use App\Models\Company;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
         // Configuration::factory(10)->create();
         // Courier::factory(10)->create();
-        // ShopifyConfig::factory(10)->create();
+        // StorefrontConfig::factory(10)->create();
         // Company::factory(10)->create();
 
         // $table->string('key')->nullable();

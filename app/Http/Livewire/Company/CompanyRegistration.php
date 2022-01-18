@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Company;
 use App\Models\AllConfiguration;
 use Livewire\Component;
 use App\Models\Company;
-use App\Models\ShopifyConfig;
+use App\Models\StorefrontConfig;
 use App\Models\Courier;
 use App\Models\Configuration;
 use App\Models\User;
@@ -35,16 +35,12 @@ class CompanyRegistration extends Component
     public $supply_email;
     public $logo;
 
-    // courier details 
-    // public $courier_credentials;
-    // public $courier_return_address;
-    // public $courier_account_id;
-    // public $courier_return_email;
-    // public $courier_api_doc_url;
-    // public $courier_logo;
+    // public ?StorefrontConfig $storefronts = null;
+    // public ?Courier $couriers = null;
+    // public ?Company $companies = null;
 
-    public ?ShopifyConfig $storefronts = null;
-    public ?Courier $couriers = null;
+    public $storefronts = [];
+    public $couriers = [];
 
     public $pages = [
         1 => [
@@ -77,106 +73,118 @@ class CompanyRegistration extends Component
         ],
     ];
 
-    private $validationRules = [
+    public $validationRules = [
         1 => [
             'first_name' => ['required','max:255'],
             'last_name' => ['required','max:255'],
-            'email_address' => ['required', 'email', 'unique:companies,email_address','max:255'],
+            'email_address' => ['required', 'email','unique:companies,email_address','max:255'],
         ],
         2 => [
-            'password' => ['required', 'string', 'min:8'],
-            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+            'storefronts.url' => ['required','max:255'],
+            'storefronts.key' => ['required'],
+            'storefronts.password' => ['required'],
+            'storefronts.hook_secret' => ['required'],
+            'storefronts.city' => ['required'],
+            'storefronts.country' => ['required'],
+            'storefronts.mobile' => ['required'],
+            'storefronts.province' => ['required'],
+            'storefronts.zipcode' => ['required'],
+            'storefronts.currency' => ['required'],
+            'storefronts.exchange_rate' => ['required'],
         ],
         3 => [
-            'password' => ['required', 'string', 'min:8'],
-            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+            'couriers.credentials' => ['required'],
+            'couriers.return_address' => ['required'],
+            'couriers.account_id' => ['required'],
+            'couriers.return_email' => ['required'],
+            'couriers.logo' => ['nullable'],
+            'couriers.api_doc_url' => ['required'],
         ],
         4 => [
-            'password' => ['required', 'string', 'min:8'],
-            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+            'configs.0.value' => ['required'],
+            'configs.1.value' => ['required'],
+            'configs.2.value' => ['required'],
         ],
         5 => [
-            'password' => ['required', 'string', 'min:8'],
-            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+            'configs.3.value' => ['required'],
+            'configs.4.value' => ['required'],
+            'configs.5.value' => ['required'],
+            'configs.6.value' => ['required'],
+            'configs.7.value' => ['required'],
+            'configs.8.value' => ['required'],
         ],
         6 => [
-            'password' => ['required', 'string', 'min:8'],
-            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+            'configs.9.value' => ['required'],
+            'configs.10.value' => ['required'],
+            'configs.11.value' => ['required'],
         ],
         7 => [
-            'password' => ['required', 'string', 'min:8'],
-            'confirmPassword' => ['required', 'string', 'same:password', 'min:8'],
+            'configs.12.value' => ['required'],
+            'configs.13.value' => ['required'],
+            'configs.14.value' => ['required'],
         ],
     ];
 
-    protected $rules = [
-        // 'configs.*.value' => 'nullable',
-        'storefronts.url' => 'required',
-        'storefronts.key' => 'required',
-        'storefronts.password' => 'required',
-        'storefronts.hook_secret' => 'required',
-        'storefronts.city' => 'required',
-        'storefronts.country' => 'required',
-        'storefronts.mobile' => 'required',
-        'storefronts.province' => 'required',
-        'storefronts.zipcode' => 'required',
-        'storefronts.currency' => 'required',
-        'storefronts.exchange_rate' => 'required',
-        'storefronts.company_id' => 'required',
-        'couriers.credentials' => 'required',
-        'couriers.return_address' => 'required',
-        'couriers.account_id' => 'required',
-        'couriers.return_email' => 'required',
-        'couriers.logo' => 'required',
-        'couriers.api_doc_url' => 'required',
-    ];
+    // protected $rules = [
+    //     'configs.*.value' => 'nullable',
+    //     'first_name' => 'required'|'max:255',
+    //     'last_name' => 'required'|'max:255',
+    //     'email_address' => 'required'|'email'|'unique:companies,email_address'|'max:255',
+    //     'storefronts.url' => 'required',
+    //     'storefronts.key' => 'required',
+    //     'storefronts.password' => 'required',
+    //     'storefronts.hook_secret' => 'required',
+    //     'storefronts.city' => 'required',
+    //     'storefronts.country' => 'required',
+    //     'storefronts.mobile' => 'required',
+    //     'storefronts.province' => 'required',
+    //     'storefronts.zipcode' => 'required',
+    //     'storefronts.currency' => 'required',
+    //     'storefronts.exchange_rate' => 'required',
+    //     'storefronts.company_id' => 'required',
+    //     'couriers.credentials' => 'required',
+    //     'couriers.return_address' => 'required',
+    //     'couriers.account_id' => 'required',
+    //     'couriers.return_email' => 'required',
+    //     'couriers.logo' => 'required',
+    //     'couriers.api_doc_url' => 'required',
+    // ];
 
     protected function rules()
     {
-        // return [
-        //     'name' => 'required|min:6',
-        //     'email' => ['required', 'email', 'not_in:' . auth()->user()->email],
-        // ];
-        $this->validationMaker();
-        return $this->rules;
+        // dd($this->validationRules[$this->currentPage]);
+        return $this->validationRules[$this->currentPage];
     }
-
-    
-
 
     public function mount()
     {
-        $this->configs = AllConfiguration::all();
-        $this->validationMaker();
-        // dd($this->rules);
-        // $dynamic_validation = array_merge($this->rules,json_decode($this->configs[0]['validation'],true));
-        // dd($dynamic_validation);
-
-        // dd(json_decode($this->configs[0]['validation'],true));
-        $this->storefronts = new ShopifyConfig();
-        $this->couriers = new Courier();
-        // dd($this->storefronts);
-        // dd($this->configs->toArray(), $this->currentPage);
-        // dd($configs[0]['batch_no']);
+        $this->configs = AllConfiguration::all()->toArray();
+        // dd(gettype($this->configs));
+        // $this->validationMaker();
+        // $this->storefronts = new StorefrontConfig();
+        // $this->couriers = new Courier();
+        // $this->companies = new Company();
+        // dd($this->validationRules);
     }
 
     public function validationMaker(){
-
         for($x = 0; $x < sizeof($this->configs); $x++){
-            $this->rules["configs.".$x.".value"] = $this->configs[$x]['validation'];
+            $this->validationRules["configs.".$x.".value"] = $this->configs[$x]['validation'];
         }
-        
     }
 
     public function updated($propertyName)
     {
-        // dd($this->configs);
+        // dd($propertyName);
         // $this->validateOnly($propertyName, $this->validationRules[$this->currentPage]);
+        $this->validateOnly($propertyName,$this->rules());
     }
 
     public function goToNextPage()
     {
+        // dd($this->rules());
         // $this->validate($this->validationRules[$this->currentPage]);
+        $this->validate($this->rules());
         $this->currentPage++;
     }
 
@@ -192,9 +200,8 @@ class CompanyRegistration extends Component
 
     public function submit()
     {
-        // $rules = collect($this->validationRules)->collapse()->toArray();
-
-        // $this->validate($rules);
+        $rules = collect($this->validationRules)->collapse()->toArray();
+        $this->validate($rules);
 
         $company = Company::create([
             'first_name' => $this->first_name,
@@ -215,40 +222,12 @@ class CompanyRegistration extends Component
             'logo' => $this->logo,
         ]);
 
-        // dd($this->storefronts);
+        // $company->create($this->companies->toArray());
+        // dd($this->configs->toArray());
         // dd($this->storefronts->toArray());
-        $company->shopify_configs()->create($this->storefronts->toArray());
-        $company->couriers()->create($this->couriers->toArray());
-        // $company = ShopifyConfig::create($this->storefronts);
-        // $company->shopify_configs()->createOne($this->storefronts);
-
-        // ShopifyConfig::create([
-        //     'storefront_url' =>$this->storefront_url,
-        //     'storefront_key' =>$this->storefront_key,
-        //     'storefront_password' =>$this->storefront_password,
-        //     'storefront_hook_secret' =>$this->storefront_hook_secret,
-        //     'storefront_city' =>$this->storefront_city,
-        //     'storefront_country' =>$this->storefront_country,
-        //     'storefront_mobile' =>$this->storefront_mobile,
-        //     'storefront_province' =>$this->storefront_province,
-        //     'storefront_zipcode' =>$this->storefront_zipcode,
-        //     'storefront_currency' =>$this->storefront_currency,
-        //     'storefront_exchange_rate' =>$this->storefront_exchange_rate,
-        //     // 'company_id' => $company->id
-        // ]);
-
-        // Courier::create([
-        //     'courier_credentials' => $this->courier_credentials,
-        //     'courier_return_address' => $this->courier_return_address,
-        //     'courier_account_id' => $this->courier_account_id,
-        //     'courier_return_email' => $this->courier_return_email,
-        //     'courier_logo' => $this->courier_logo,
-        //     'courier_api_doc_url' => $this->courier_api_doc_url,
-        // ]);
-
-        $company->cofigurations()->createMany($this->configs->toArray());
-
-        
+        $company->shopify_configs()->create($this->storefronts);
+        $company->couriers()->create($this->couriers);
+        $company->cofigurations()->createMany($this->configs);
 
         $this->reset();
         $this->resetValidation();

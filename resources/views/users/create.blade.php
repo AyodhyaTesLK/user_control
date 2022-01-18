@@ -105,25 +105,7 @@
             <div class="col-span-5">
 
                 @csrf
-                <!-- Username -->
-                <div class="username">
-                    <label for="username-adress-icon" class="block mb-2 text-sm font-medium ">Username</label>
-                    <div class="relative mt-1">
-                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                stroke="gray">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </div>
-                        <input type="text" id="username-adress-icon" name="username"
-                            class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                            placeholder="john1997" value="{{ old('username') }}">
-                    </div>
-                    @error('username')
-                        <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
+                
                 
 
                 <div class="flex  mt-8">

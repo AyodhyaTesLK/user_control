@@ -32,7 +32,7 @@ class Company extends Model
 
     public function shopify_configs()
     {
-        return $this->hasMany(ShopifyConfig::class);
+        return $this->hasMany(StorefrontConfig::class);
     }
 
     public function couriers()

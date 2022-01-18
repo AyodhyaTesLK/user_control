@@ -22,7 +22,6 @@ class User extends Authenticatable
         'lname',
         'email',
         'password',
-        'username',
         'has_360',
         'has_crm',
         'has_ops',
