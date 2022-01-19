@@ -9,6 +9,7 @@ use App\Models\StorefrontConfig;
 use App\Models\Courier;
 use App\Models\Configuration;
 use App\Models\User;
+use PhpParser\ErrorHandler\Collecting;
 use PhpParser\Node\Expr\Cast\Object_;
 
 use function GuzzleHttp\Promise\all;
@@ -20,25 +21,7 @@ class CompanyRegistration extends Component
     public $success;
     public $configs;
 
-    // company details
-    public $first_name;
-    public $last_name;
-    public $email_address;
-    public $addressline1;
-    public $addressline2;
-    public $city;
-    public $country;
-    public $hot_line_contact;
-    public $operation_email;
-    public $helpdesk_email;
-    public $customer_support_email;
-    public $supply_email;
-    public $logo;
-
-    // public ?StorefrontConfig $storefronts = null;
-    // public ?Courier $couriers = null;
-    // public ?Company $companies = null;
-
+    public $companies = [];
     public $storefronts = [];
     public $couriers = [];
 
@@ -73,117 +56,74 @@ class CompanyRegistration extends Component
         ],
     ];
 
-    public $validationRules = [
+    protected $validationRules = [
         1 => [
-            'first_name' => ['required','max:255'],
-            'last_name' => ['required','max:255'],
-            'email_address' => ['required', 'email','unique:companies,email_address','max:255'],
+            'companies.first_name' => 'required|max:50',
+            'companies.last_name' => 'required|max:50',
+            'companies.email_address' => 'required|email|unique:companies,email_address',
         ],
         2 => [
-            'storefronts.url' => ['required','max:255'],
-            'storefronts.key' => ['required'],
-            'storefronts.password' => ['required'],
-            'storefronts.hook_secret' => ['required'],
-            'storefronts.city' => ['required'],
-            'storefronts.country' => ['required'],
-            'storefronts.mobile' => ['required'],
-            'storefronts.province' => ['required'],
-            'storefronts.zipcode' => ['required'],
-            'storefronts.currency' => ['required'],
-            'storefronts.exchange_rate' => ['required'],
+            'storefronts.url' => 'required|max:255',
+            'storefronts.key' => 'required',
+            'storefronts.password' => 'required',
+            'storefronts.hook_secret' => 'required',
+            'storefronts.city' => 'required',
+            'storefronts.country' => 'required',
+            'storefronts.mobile' => 'required',
+            'storefronts.province' => 'required',
+            'storefronts.zipcode' => 'required',
+            'storefronts.currency' => 'required',
+            'storefronts.exchange_rate' => 'required',
         ],
         3 => [
-            'couriers.credentials' => ['required'],
-            'couriers.return_address' => ['required'],
-            'couriers.account_id' => ['required'],
-            'couriers.return_email' => ['required'],
-            'couriers.logo' => ['nullable'],
-            'couriers.api_doc_url' => ['required'],
-        ],
-        4 => [
-            'configs.0.value' => ['required'],
-            'configs.1.value' => ['required'],
-            'configs.2.value' => ['required'],
-        ],
-        5 => [
-            'configs.3.value' => ['required'],
-            'configs.4.value' => ['required'],
-            'configs.5.value' => ['required'],
-            'configs.6.value' => ['required'],
-            'configs.7.value' => ['required'],
-            'configs.8.value' => ['required'],
-        ],
-        6 => [
-            'configs.9.value' => ['required'],
-            'configs.10.value' => ['required'],
-            'configs.11.value' => ['required'],
-        ],
-        7 => [
-            'configs.12.value' => ['required'],
-            'configs.13.value' => ['required'],
-            'configs.14.value' => ['required'],
+            'couriers.credentials' => 'required',
+            'couriers.return_address' => 'required',
+            'couriers.account_id' => 'required',
+            'couriers.return_email' => 'required',
+            'couriers.logo' => 'nullable',
+            'couriers.api_doc_url' => 'required',
         ],
     ];
 
-    // protected $rules = [
-    //     'configs.*.value' => 'nullable',
-    //     'first_name' => 'required'|'max:255',
-    //     'last_name' => 'required'|'max:255',
-    //     'email_address' => 'required'|'email'|'unique:companies,email_address'|'max:255',
-    //     'storefronts.url' => 'required',
-    //     'storefronts.key' => 'required',
-    //     'storefronts.password' => 'required',
-    //     'storefronts.hook_secret' => 'required',
-    //     'storefronts.city' => 'required',
-    //     'storefronts.country' => 'required',
-    //     'storefronts.mobile' => 'required',
-    //     'storefronts.province' => 'required',
-    //     'storefronts.zipcode' => 'required',
-    //     'storefronts.currency' => 'required',
-    //     'storefronts.exchange_rate' => 'required',
-    //     'storefronts.company_id' => 'required',
-    //     'couriers.credentials' => 'required',
-    //     'couriers.return_address' => 'required',
-    //     'couriers.account_id' => 'required',
-    //     'couriers.return_email' => 'required',
-    //     'couriers.logo' => 'required',
-    //     'couriers.api_doc_url' => 'required',
+    // protected $messages = [
+    //     'companies.first_name.required' => 'first name is required',
+    //     'companies.first_name.max' => 'first name maximum 50 characters',
+    //     'companies.last_name.required' => 'last name maximum 50 characters',
+    //     'companies.last_name.max' => 'last name maximum 50 characters',
+    //     'companies.email_address.unique' => 'email address has already been taken',
+    //     'companies.email_address.required' => 'email address required',
     // ];
 
     protected function rules()
     {
-        // dd($this->validationRules[$this->currentPage]);
+        // collect($this->configs)->each(function($value,$key){
+        //     // $this->validationRules[$value['batch_no']]["configs.".$key.".value"] = $value['validation'];
+        // });
+        // $configs->mapToGroups(fn($item, $key) => [$item['batch_no'] => ["configs.{$key}.value" => $item['validation']]])
+        //         ->map(fn($item) => $item->collapse()->toArray())
+
+        collect($this->configs)->each(fn($value,$key) => $this->validationRules[$value['batch_no']]["configs.{$key}.value"] = $value['validation']);
+
+        // for($x = 0; $x < sizeof($this->configs); $x++){
+        //     $this->validationRules[$this->configs[$x]['batch_no']]["configs.".$x.".value"] = $this->configs[$x]['validation'];
+        // }
+        // dd($this->validationRules);
         return $this->validationRules[$this->currentPage];
     }
 
     public function mount()
     {
         $this->configs = AllConfiguration::all()->toArray();
-        // dd(gettype($this->configs));
-        // $this->validationMaker();
-        // $this->storefronts = new StorefrontConfig();
-        // $this->couriers = new Courier();
-        // $this->companies = new Company();
-        // dd($this->validationRules);
     }
 
-    public function validationMaker(){
-        for($x = 0; $x < sizeof($this->configs); $x++){
-            $this->validationRules["configs.".$x.".value"] = $this->configs[$x]['validation'];
-        }
-    }
 
     public function updated($propertyName)
     {
-        // dd($propertyName);
-        // $this->validateOnly($propertyName, $this->validationRules[$this->currentPage]);
         $this->validateOnly($propertyName,$this->rules());
     }
 
     public function goToNextPage()
     {
-        // dd($this->rules());
-        // $this->validate($this->validationRules[$this->currentPage]);
         $this->validate($this->rules());
         $this->currentPage++;
     }
@@ -203,36 +143,16 @@ class CompanyRegistration extends Component
         $rules = collect($this->validationRules)->collapse()->toArray();
         $this->validate($rules);
 
-        $company = Company::create([
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email_address' => $this->email_address,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email_address' => $this->email_address,
-            'addressline1' => $this->addressline1,
-            'addressline2' => $this->addressline2,
-            'city' => $this->city,
-            'country' => $this->country,
-            'hot_line_contact' => $this->hot_line_contact,
-            'operation_email' => $this->operation_email,
-            'helpdesk_email' => $this->helpdesk_email,
-            'customer_support_email' => $this->customer_support_email,
-            'supply_email' => $this->supply_email,
-            'logo' => $this->logo,
-        ]);
-
-        // $company->create($this->companies->toArray());
-        // dd($this->configs->toArray());
-        // dd($this->storefronts->toArray());
+        $company = Company::create($this->companies);
         $company->shopify_configs()->create($this->storefronts);
         $company->couriers()->create($this->couriers);
         $company->cofigurations()->createMany($this->configs);
 
-        $this->reset();
+        $this->resetExcept('configs');
         $this->resetValidation();
 
         $this->success = 'Submission successfully! We will contact you soon';
+        // $this->mount();
     }
 
     public function render()

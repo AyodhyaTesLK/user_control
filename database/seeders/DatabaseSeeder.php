@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "email",
                 "batch_no" => 4,
                 "type" => "text",
-                "validation" => "required",
+                "validation" => "required,min:5",
             ],
             [
                 "key" => "email_config_username",
@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
                 "domain" => "email",
                 "batch_no" => 4,
                 "type" => "text",
-                "validation" => "required",
+                "validation" => "required,min:5",
             ],
             [
                 "key" => "email_password",
