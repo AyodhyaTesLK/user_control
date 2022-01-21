@@ -71,9 +71,6 @@
                             Client Name
                         </th>
                         <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase ">
-                            Username
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase ">
                             Email
                         </th>
                         <th scope="col" class="px-6 py-3 text-sm  tracking-wider text-left  uppercase ">
@@ -111,12 +108,7 @@
                                 {{-- <img src="storage/avatars/{{ $user->img_url }}" alt="avatar"
                                     class=" mx-3 w-10 h-10 rounded-full object-cover"> --}}
 
-                                {{ $user->fname }}  {{ $user->lname }}
-                            </td>
-
-                            <!-- Username -->
-                            <td class="px-6 py-4 text-sm text-gray-800 ">
-                                {{ $user->username }}
+                                {{ $user->first_name }}  {{ $user->last_name }}
                             </td>
 
                             <!-- email -->

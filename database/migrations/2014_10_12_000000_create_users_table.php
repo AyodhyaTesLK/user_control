@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->boolean('has_crm');
@@ -27,8 +27,8 @@ class CreateUsersTable extends Migration
             $table->boolean('has_ops');
             $table->string('img_url')->nullable();
             $table->string('last_login')->nullable();
-            $table->string('is_active');
-            $table->string('user_type'); 
+            $table->string('is_active')->nullable();
+            $table->string('user_type')->nullable(); 
             $table->unsignedBigInteger('company_id')->nullable();
         });
         

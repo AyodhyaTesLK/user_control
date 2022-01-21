@@ -25,7 +25,7 @@ class Company extends Model
         'logo',
     ];
 
-    public function companies()
+    public function users()
     {
         return $this->hasMany(User::class);
     }

@@ -105,9 +105,6 @@
             <div class="col-span-5">
 
                 @csrf
-                
-                
-
                 <div class="flex  mt-8">
                     <!-- First Name -->
                     <div class="mr-10 w-full">
@@ -121,11 +118,11 @@
                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                            <input type="text" id="first-name-adress-icon" name="fname"
+                            <input type="text" id="first-name-adress-icon" name="first_name"
                                 class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                                placeholder="John" value="{{ old('fname') }}">
+                                placeholder="John" value="{{ old('first_name') }}">
                         </div>
-                            @error('fname')
+                            @error('first_name')
                                 <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                             @enderror
                     </div>
@@ -142,11 +139,11 @@
                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                            <input type="text" id="last-name-adress-icon" name="lname"
+                            <input type="text" id="last-name-adress-icon" name="last_name"
                                 class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                                placeholder="Doe" value="{{ old('lname') }}">
+                                placeholder="Doe" value="{{ old('last_name') }}">
                         </div>
-                        @error('lname')
+                        @error('last_name')
                             <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
@@ -354,6 +351,13 @@
 
         </div>
     </div>
+
+    <style>
+        input:checked ~ .dot {
+            transform: translateX(100%);
+            background-color: #48bb78;
+        }
+    </style>
 
 
 </x-layout>

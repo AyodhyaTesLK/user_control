@@ -53,15 +53,15 @@
                         <div class="flex justify-center">
                             <!-- 360 -->
                             <a href="#"
-                                class="m-2 bg-yellow-400 px-8 py-2 rounded-lg font-semibold text-cyan-50 shadow-md hover:bg-yellow-500">360</a>
+                                class="m-2 bg-yellow-400 px-8 py-2 rounded-lg font-small text-cyan-50 shadow-md hover:bg-yellow-500">360</a>
 
                             <!-- CRM -->
                             <a href="#"
-                                class="m-2 bg-red-400 px-8 py-2 rounded-lg font-semibold text-cyan-50 shadow-md hover:bg-red-500">CRM</a>
+                                class="m-2 bg-red-400 px-8 py-2 rounded-lg font-small text-cyan-50 shadow-md hover:bg-red-500">CRM</a>
 
                             <!-- OPS -->
                             <a href="#"
-                                class="m-2 bg-blue-400 px-8 py-2 rounded-lg font-semibold text-cyan-50 shadow-md hover:bg-blue-500">OPS</a>
+                                class="m-2 bg-blue-400 px-8 py-2 rounded-lg font-small text-cyan-50 shadow-md hover:bg-blue-500">OPS</a>
                         </div>
                     </div>
 
@@ -74,21 +74,21 @@
                             <!-- Edit -->
                             <div class="mb-6">
                                 <a href="#"
-                                    class="m-2 mb-24 bg-green-400 px-4 py-2 rounded-lg font-semibold text-cyan-50 shadow-md hover:bg-green-500">Edit
+                                    class="m-2 mb-24 bg-green-400 px-4 py-2 rounded-lg font-small text-cyan-50 shadow-md hover:bg-green-500">Edit
                                     Account</a>
                             </div>
 
                             <!-- Disable -->
                             <div class="mb-6">
                                 <a href="#"
-                                    class="m-2 bg-red-400 px-4 py-2 rounded-lg font-semibold text-cyan-50 shadow-md hover:bg-red-500">Deactivate
+                                    class="m-2 bg-red-400 px-4 py-2 rounded-lg font-small text-cyan-50 shadow-md hover:bg-red-500">Deactivate
                                     Account</a>
                             </div>
 
                             <!-- Delete -->
                             <div>
                                 <a href="#"
-                                    class="m-2 bg-red-500 px-4 py-2 rounded-lg font-semibold text-cyan-50 shadow-md hover:bg-red-600">Delete
+                                    class="m-2 bg-red-500 px-4 py-2 rounded-lg font-small text-cyan-50 shadow-md hover:bg-red-600">Delete
                                     Account</a>
                             </div>
 
@@ -104,26 +104,11 @@
             <!-- flex-2 -->
             <div class="col-span-5">
 
-                <!-- Username -->
-                <label for="username-adress-icon" class="block mb-2 text-sm font-medium ">Username</label>
-                <div class="relative mt-1 mb-8">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="gray">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                    </div>
-                    <input type="text" id="username-adress-icon" name="username"
-                        class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                        placeholder="name@gmail.com" value="{{$user->username}}">
-                </div>
-
                 <div class="flex  ">
                     <!-- First Name -->
                     <div class="mr-10 w-full">
                         <label for="first-name-adress-icon" class="block mb-2 text-sm font-medium ">First
-                            Name</label>
+                            name</label>
                         <div class="relative mt-1 mb-8">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
@@ -132,16 +117,16 @@
                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                            <input type="text" id="first-name-adress-icon" name="fname"
+                            <input type="text" id="first-name-adress-icon" name="first_name"
                                 class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                                placeholder="First Name" value="{{$user->fname}}">
+                                placeholder="First Name" value="{{$user->first_name}}">
                         </div>
                     </div>
 
 
                     <div class="w-full">
                         <!-- Last Name -->
-                        <label for="last-name-adress-icon" class="block mb-2 text-sm font-medium ">Last Name</label>
+                        <label for="last-name-adress-icon" class="block mb-2 text-sm font-medium ">Last name</label>
                         <div class="relative mt-1 mb-8">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
@@ -150,9 +135,9 @@
                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                            <input type="text" id="last-name-adress-icon" name="lname"
+                            <input type="text" id="last-name-adress-icon" name="last_name"
                                 class=" border   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  "
-                                placeholder="name@gmail.com" value="{{$user->lname}}">
+                                placeholder="Last Name" value="{{$user->last_name}}">
                         </div>
                     </div>
                 </div>
@@ -194,7 +179,6 @@
                 <label for="password-adress-icon" class="block mb-4 text-sm font-medium ">User Accounts</label>
 
                 <div class=" flex">
-
                     <div class="w-full bg-yellow-400 rounded-sm m-1">
 
                         <label for="toggleA" class="flex justify-between cursor-pointer  m-4 "> 
@@ -277,13 +261,6 @@
                         Username already taken!</p>
                 </div> --}}
 
-
-
-               
-                <br><br>
-                <div> 
-                    <button type="submit" class="submit px-8 py-2 bg-green-500 rounded-sm mt-12">Save Changes</button>
-                </div>
                 </form>
             </div>
 
@@ -339,6 +316,13 @@
 
         </div>
     </div>
+
+    <style>
+        input:checked ~ .dot {
+            transform: translateX(100%);
+            background-color: #48bb78;
+        }
+    </style>
 
 
 </x-layout>

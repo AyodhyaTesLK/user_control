@@ -64,7 +64,7 @@
             </div>
         </div>
     </div> --}}
-    @livewire('company.company-registration')
+    @livewire('company.company-show')
     @livewireScripts
 </div>
 </body>

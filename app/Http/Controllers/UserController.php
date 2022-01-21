@@ -41,17 +41,16 @@ class UserController extends Controller
     public function store(StorePostRequest $request)
     {
         $data = $request->only([
-            'fname',
-            'lname',
+            'first_name',
+            'last_name',
             'email',
-            'username',
         ]);
         //get data from form
         $data['password'] = bcrypt($request->password);
         $data['has_crm'] = $request->has('has_crm');
         $data['has_360'] = $request->has('has_360');
         $data['has_ops'] = $request->has('has_ops');
-        $data['status'] = 1;
+        $data['is_active'] = 1;
 
         //check if user add image and save it
         $data['img_url'] = $this->saveAvatar($request);

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,18 +46,18 @@ Route::resource('/users', UserController::class);
 
 
 //page routes
-Route::get('/about', [PageController::class, 'index']);
-Auth::routes();
+// Route::get('/about', [PageController::class, 'index']);
+// Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/', function () {
     return view('welcome');
